@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>mr.pennyworth.AlfredGoogle</string>
+	<key>category</key>
+	<string>Internet</string>
+	<key>connections</key>
+	<dict>
+		<key>90C0D5CD-57C4-4CD2-9483-780F71817CBC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6C8DB6AA-9A9A-480C-8B16-ECE5089F847F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>AC02AC6E-7D9C-4AC1-9BC3-9AADDF71695F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>782A4776-904D-42AD-B399-B5CCA4FFA9C1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Mr. Pennyworth</string>
+	<key>description</key>
+	<string>Search Google Right in Alfred</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Google Search</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string></string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>6C8DB6AA-9A9A-480C-8B16-ECE5089F847F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>.g</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>function urlquote() {
+  python2 -c "import urllib; import sys; sys.stdout.write(urllib.quote(sys.argv[-1]))" "$1"
+}
+
+quoted=$(urlquote "$1")
+url="https://www.google.com/search?q=${quoted}"
+
+cat &lt;&lt; EOF | 'AlfredGoogleViewer.app/Contents/Resources/scripts/alfred-google-viewer'
+{"items" : [
+  {"title": "Open in Browser",
+   "rawQuery": "$1",
+   "arg": "$url",
+   "subtitle": "url: $url"}
+]}
+EOF</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>Search Google for '{query}'</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>90C0D5CD-57C4-4CD2-9483-780F71817CBC</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>#!/bin/bash
+
+defaults write com.runningwithcrayons.Alfred experimental.presssecretary -bool YES
+xattr -d com.apple.quarantine AlfredGoogleViewer.app
+open AlfredGoogleViewer.app
+
+killall Alfred
+open "/Applications/Alfred 4.app"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>782A4776-904D-42AD-B399-B5CCA4FFA9C1</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>.setup-google</string>
+				<key>subtext</key>
+				<string>.setup-google</string>
+				<key>text</key>
+				<string>Setup Google Search</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>AC02AC6E-7D9C-4AC1-9BC3-9AADDF71695F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>6C8DB6AA-9A9A-480C-8B16-ECE5089F847F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>185</integer>
+			<key>ypos</key>
+			<integer>10</integer>
+		</dict>
+		<key>782A4776-904D-42AD-B399-B5CCA4FFA9C1</key>
+		<dict>
+			<key>note</key>
+			<string>- enable press secretary
+- de-quarantine
+- start app</string>
+			<key>xpos</key>
+			<integer>185</integer>
+			<key>ypos</key>
+			<integer>135</integer>
+		</dict>
+		<key>90C0D5CD-57C4-4CD2-9483-780F71817CBC</key>
+		<dict>
+			<key>xpos</key>
+			<integer>10</integer>
+			<key>ypos</key>
+			<integer>10</integer>
+		</dict>
+		<key>AC02AC6E-7D9C-4AC1-9BC3-9AADDF71695F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>10</integer>
+			<key>ypos</key>
+			<integer>135</integer>
+		</dict>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>0.0.1</string>
+	<key>webaddress</key>
+	<string>https://github.com/mr-pennyworth/alfred-google</string>
+</dict>
+</plist>
